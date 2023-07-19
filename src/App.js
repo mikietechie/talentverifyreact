@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { AuthContext } from "./contexts/auth";
+import WebsiteLayout from "./pages/website/WebsiteLayout";
+import Home from "./pages/website/Home";
+import NotFound from "./pages/website/NotFound";
+import Login from './pages/website/Login';
+import Dashboard from './pages/admin/Dashboard';
+import Settings from './pages/admin/Settings';
+import AdminLayout from './pages/admin/AdminLayout';
+import Logout from "./pages/website/Logout";
+import { Users, UsersAdd } from "./pages/admin/models/users";
+import { CompanyAddUpdate, CompanyDetails, CompanyList } from "./pages/admin/models/company";
+import { Upload } from "./pages/admin/Upload";
 
-function App() {
+export default function App() {
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    const user = localStorage.getItem('user')
+    if (user) {
+      setUser(JSON.parse(user))
+    }
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AuthContext.Provider value={{ user, setUser }}>
+      <BrowserRouter>
+        <Routes>
+          {
+            user && (
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="/admin" element={<Dashboard />} />
+                <Route path="/admin/upload" element={<Upload user={user} />} />
+                <Route path="/admin/settings" element={<Settings />} />
+                <Route path="/admin/users" element={<Users />} />
+                <Route path="/admin/users/add" element={<UsersAdd />} />
+                <Route path="/admin/company/list" element={<CompanyList user={user} />} />
+                <Route path="/admin/company/add" element={<CompanyAddUpdate user={user} />} />
+                <Route path="/admin/company/edit/:id" element={<CompanyAddUpdate user={user} />} />
+                <Route path="/admin/company/detail/:id" element={<CompanyDetails user={user} />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            )}
+          <Route path="/" element={<WebsiteLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthContext.Provider>
+  )
 }
-
-export default App;

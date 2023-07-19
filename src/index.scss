@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* Admin Layout  */
+.bg-f1f5f9 {
+  background-color: #f1f5f9;
+}
+
+.apc .box-bd {
+  border-radius: 5px;
+  border: 2px solid #f1f5f9;
+  box-shadow: 0 0 5px #f1f5f9;
+}
+
+.apc ::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f1f5f9;
+}
+.apc ::-webkit-scrollbar-thumb {
+  background-color: #008cba;
+  border-radius: 5px;
+}
+.apc .sidebar {
+  background-color: #fff;
+  height: 100vh;
+  transition: display 10s ease-in-out;
+}
+.apc .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 98;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.apc .mobile-sidebar {
+  height: 100vh;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.apc .sidebar-inner {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.apc .sidebar .sidebar-inner .logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.apc .sidebar .sidebar-inner h1 {
+  font-weight: bold;
+}
+
+.apc .sidebar .sidebar-inner p {
+  font-style: italic;
+}
+
+.apc .sidebar .sidebar-inner .list-group .list-group-item {
+  border: none;
+  font-size: 16px;
+}
+
+.apc .sidebar .sidebar-inner .list-group .list-group-item:hover,
+.apc .sidebar .sidebar-inner .list-group .list-group-item.active {
+  border-left: 5px solid #008cba;
+  background-color: #f1f5f9;
+}
+
+.apc .sidebar .sidebar-inner .list-group .list-group-item a:hover {
+  text-decoration: none;
+}
+
+.apc .sidebar .sidebar-inner .list-group .list-group-item>.list-group {
+  display: none;
+  transition: display 10s ease-in-out;
+}
+
+.apc .sidebar .sidebar-inner .list-group .list-group-item:hover>.list-group {
+  display: block;
+}
