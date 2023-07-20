@@ -27,7 +27,7 @@ code {
   background-color: #f1f5f9;
 }
 .apc ::-webkit-scrollbar-thumb {
-  background-color: #008cba;
+  background-color: #1A1A1A;
   border-radius: 5px;
 }
 .apc .sidebar {
@@ -80,7 +80,7 @@ code {
 
 .apc .sidebar .sidebar-inner .list-group .list-group-item:hover,
 .apc .sidebar .sidebar-inner .list-group .list-group-item.active {
-  border-left: 5px solid #008cba;
+  border-left: 5px solid #1A1A1A;
   background-color: #f1f5f9;
 }
 
@@ -101,7 +101,7 @@ code {
   a {
     text-decoration: none !important;
     &:hover {
-      border-left: 5px solid #008cba;
+      border-left: 5px solid #1A1A1A;
     }
   }
 }

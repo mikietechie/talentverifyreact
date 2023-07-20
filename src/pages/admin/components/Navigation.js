@@ -79,9 +79,9 @@ export default function Navigation({ children }) {
                                         </span>
                                         <span>
                                             <div className='btn-group'>
-                                                <button className="btn rounded px-3"><i className="fa fa-bell"></i></button>
-                                                <Link to="/logout" className="btn rounded px-3"><i className="fa fa-sign-out"></i></Link>
-                                                <button className="btn rounded px-3"><i className="fa fa-user"></i>&nbsp;{user.username}</button>
+                                                {/* <button className="btn rounded px-3"><i className="fa fa-bell"></i></button> */}
+                                                <Link to="/logout/" className="btn rounded px-3"><i className="fa fa-sign-out"></i></Link>
+                                                <Link to="/admin/settings/" className="btn rounded px-3"><i className="fa fa-user"></i>&nbsp;{user.username}</Link>
                                             </div>
                                         </span>
                                     </div>
