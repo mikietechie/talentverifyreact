@@ -280,36 +280,40 @@ export const UserDetails = ({user}) => {
         ) : (
         <form className="row">
           <div className="col-md-6 mb-3">
-            <p className="form-label">Company</p>
-            <p>{item.data.company}</p>
-          </div>
-          <div className="col-md-6 mb-3">
             <p className="form-label">First Name</p>
-            <p>{item.data.first_name}</p>
+            <p>{item.first_name}</p>
           </div>
           <div className="col-md-6 mb-3">
-            <p className="form-label">Employee</p>
-            <p>{item.data.employee}</p>
+            <p className="form-label">Last Name</p>
+            <p>{item.last_name}</p>
+          </div>
+          <div className="col-md-6 mb-3">
+            <p className="form-label">Username</p>
+            <p>{item.username}</p>
+          </div>
+          <div className="col-md-6 mb-3">
+            <p className="form-label">Email</p>
+            <p>{item.email}</p>
           </div>
           <div className="col-md-6 mb-3">
             <p className="form-label">Role</p>
             <p>{item.role}</p>
           </div>
-          <div className="col-12 mb-3">
-            <p className="form-label">Duties</p>
-            <p>{item.duties}</p>
+          {/* <div className="col-md-6 mb-3">
+            <p className="form-label">Is Active</p>
+            <p>{item.is_active}</p>
           </div>
           <div className="col-md-6 mb-3">
-            <p className="form-label">Registration Number</p>
-            <p>{item.registration_number}</p>
+            <p className="form-label">Is Super User</p>
+            <p>{item.is_superuser}</p>
+          </div> */}
+          <div className="col-md-6 mb-3">
+            <p className="form-label">Last Login</p>
+            <p>{item.last_login}</p>
           </div>
           <div className="col-md-6 mb-3">
-            <p className="form-label">Date Started</p>
-            <p>{item.date_started}</p>
-          </div>
-          <div className="col-md-6 mb-3">
-            <p className="form-label">Date left</p>
-            <p>{item.date_left}</p>
+            <p className="form-label">Date Joined</p>
+            <p>{item.date_joined}</p>
           </div>
           <div className="col-12 text-end">
             <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/user/list">Back</Link>
