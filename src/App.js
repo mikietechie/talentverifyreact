@@ -6,7 +6,7 @@ import Home from "./pages/website/Home";
 import NotFound from "./pages/website/NotFound";
 import Login from './pages/website/Login';
 import Dashboard from './pages/admin/Dashboard';
-import Settings from './pages/admin/Settings';
+import { Settings } from './pages/admin/Settings';
 import AdminLayout from './pages/admin/AdminLayout';
 import Logout from "./pages/website/Logout";
 import { Users, UsersAdd } from "./pages/admin/models/users";
@@ -32,7 +32,7 @@ export default function App() {
               <Route path="/admin" element={<AdminLayout />}>
                 <Route path="/admin" element={<Dashboard />} />
                 <Route path="/admin/upload" element={<Upload user={user} />} />
-                <Route path="/admin/settings" element={<Settings />} />
+                <Route path="/admin/settings" element={<Settings user={user} />} />
                 <Route path="/admin/users" element={<Users />} />
                 <Route path="/admin/users/add" element={<UsersAdd />} />
                 <Route path="/admin/company/list" element={<CompanyList user={user} />} />

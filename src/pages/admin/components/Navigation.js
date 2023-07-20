@@ -5,7 +5,7 @@ import { AuthContext } from '../../../contexts/auth';
 
 export default function Navigation({ children }) {
     const { user } = useContext(AuthContext)
-    const [sidenavOpen, setSidenavOpen] = useState(true)
+    const [sidenavOpen, setSidenavOpen] = useState(false)
     const size = useBreakpoint()
     const isMobile = (["xs", "sm", "md"]).includes(size)
     const mainClass = (sidenavOpen && !isMobile ? "col-lg-9 col-md-8 col-sm-12" : "col-12") + " py-3 main"
@@ -38,7 +38,19 @@ export default function Navigation({ children }) {
                                 <Link to="/admin" className="nav-link"><i className="fa fa-dashboard"></i>&nbsp;Dashboard</Link>
                             </li>
                             <li className="list-group-item">
+                                <Link to="/admin/user/list" className="nav-link"><i className="fa fa-user-group"></i>&nbsp;Users</Link>
+                            </li>
+                            <li className="list-group-item">
                                 <Link to="/admin/company/list" className="nav-link"><i className="fa fa-building"></i>&nbsp;Company</Link>
+                            </li>
+                            <li className="list-group-item">
+                                <Link to="/admin/employee/list" className="nav-link"><i className="fa fa-people-group"></i>&nbsp;Employee</Link>
+                            </li>
+                            <li className="list-group-item">
+                                <Link to="/admin/department/list" className="nav-link"><i className="fa fa-building-user"></i>&nbsp;Department</Link>
+                            </li>
+                            <li className="list-group-item">
+                                <Link to="/admin/employment/list" className="nav-link"><i className="fa fa-file-signature"></i>&nbsp;Employment</Link>
                             </li>
                             <li className="list-group-item">
                                 <Link to="/admin/upload" className="nav-link"><i className="fa fa-cloud-arrow-up"></i>&nbsp;Upload</Link>

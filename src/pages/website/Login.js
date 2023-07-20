@@ -19,8 +19,8 @@ export default function Login() {
             setError('Username and password required')
             return
         }
-        if (password.length < 6) {
-            setError('Password must be at least 6 characters')
+        if (password.length < 4) {
+            setError('Password must be at least 4 characters')
             return
         }
         try {
@@ -35,7 +35,6 @@ export default function Login() {
                     const user = ures.data
                     user.tokens = lres.data
                     localStorage.setItem('user', JSON.stringify(user))
-                    console.log(user);
                     setUser(user)
                     navigate('/admin')
                 } else {
@@ -46,7 +45,7 @@ export default function Login() {
                 alert(lres.status)
             }
         } catch (error) {
-            alert(`Auth Failed`)
+            alert(error?.response?.data?.detail || error?.response?.statusText || error?.message || "Error")
         }
     }
 

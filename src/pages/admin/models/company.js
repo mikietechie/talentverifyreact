@@ -1,30 +1,31 @@
 import axios from "axios"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { APIURL } from "../../../contants"
+import { FormErrors } from "../components/FormErrors"
 
 export const CompanyList = ({user}) => {
   const [items, setItems] = useState([])
 
-  useEffect(() => {
-    loadItems()
-  }, [])
-
-  const loadItems = async () => {
+  const loadData = useCallback(async () => {
     try {
-      const res = await axios.get(`${APIURL}api/company`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+      const res = await axios.get(`${APIURL}api/company/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
       setItems(res.data)
     } catch (error) {
       alert("Failed to load items!")
     }
-  }
+  }, [user])
+
+  useEffect(() => {
+    loadData()
+  }, [loadData])
 
   const deleteItem = async (id) => {
     const confirmed = window.confirm(`Are you sure you want to delete company with id #${id}?`)
     if (confirmed) {
       try {
         await axios.delete(`${APIURL}api/company/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
-        loadItems()
+        loadData()
         alert("Item Deleted")
       } catch (error) {
         alert("Failed to delete!")
@@ -39,7 +40,7 @@ export const CompanyList = ({user}) => {
           <i className="fa fa-building"></i>&nbsp;Company List
         </h4>
         <div className="text-end">
-          <button onClick={loadItems} className="btn btn-sm btn-secondary mx-1">
+          <button onClick={loadData} className="btn btn-sm btn-secondary mx-1">
             <i className="fa fa-refresh"></i>&nbsp;Refresh
           </button>
           <Link to="/admin/company/add" className="btn btn-sm btn-primary">
@@ -96,33 +97,37 @@ export const CompanyList = ({user}) => {
 export const CompanyAddUpdate = ({user}) => {
   const [options, setOptions] = useState({})
   const [item, setItem] = useState({})
+  const [errors, setErrors] = useState({})
   const {id}= useParams()
   const formElement = useRef()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    (async () => {
+  const loadData = useCallback(async () => {
+    try {
+      const res = await axios.get(`${APIURL}api/company/form/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+      setOptions(res.data)
+    } catch (error) {
+      alert("Failed to load form options!")
+    }
+    if (id) {
       try {
-        const res = await axios.get(`${APIURL}api/company/form/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
-        setOptions(res.data)
+        const res = await axios.get(`${APIURL}api/company/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+        setItem(res.data)
       } catch (error) {
-        alert("Failed to load items!")
+        alert("Failed to load update item!")
       }
-      if (id) {
-        try {
-          const res = await axios.get(`${APIURL}api/company/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
-          setItem(res.data)
-        } catch (error) {
-          alert("Failed to load items!")
-        }
-      }
-    })()
-  }, [])
+    }
+  }, [user, id])
+
+  useEffect(() => {
+    loadData()
+  }, [loadData])
 
   const submitForm = async (e) => {
     e.preventDefault()
     const formData = new FormData(formElement.current)
     try {
+      setErrors({})
       const res = await axios[id ? "put" : "post"](`${APIURL}api/company/${id ? `${id}/` : ""}`, formData, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
       if (res.status <= 205) {
         alert(`Item ${id ? "Updated" : "Created"}!`)
@@ -131,7 +136,8 @@ export const CompanyAddUpdate = ({user}) => {
         alert("Failed to save!")
       }
     } catch (error) {
-      alert("Failed to save!")
+      setErrors(error?.response?.data || {})
+      alert(error?.response?.data?.detail || error?.response?.statusText || error?.message || "Error")
     }
     return false
   }
@@ -152,6 +158,13 @@ export const CompanyAddUpdate = ({user}) => {
           </div>
         ) : (
         <form className="row" ref={formElement} onSubmit={submitForm}>
+          {
+            Object.keys(errors).length ? (
+              <div className="col-12 mb-3">
+                <FormErrors errors={errors} />
+              </div>
+            ) : ""
+          }
           <div className="col-md-6 mb-3">
             <label className="form-label">Name</label>
             <input name="name" required={true} defaultValue={item.name || ""} type="text" className="form-control" />
@@ -204,20 +217,21 @@ export const CompanyAddUpdate = ({user}) => {
 
 export const CompanyDetails = ({user}) => {
   const [item, setItem] = useState({})
-  const {id}= useParams()
+  const { id }= useParams()
+
+  const loadData = useCallback(async () => {
+    try {
+      const res = await axios.get(`${APIURL}api/company/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+      setItem(res.data)
+      console.log(res.data)
+    } catch (error) {
+      alert(error?.response?.data?.detail || error?.response?.statusText || error?.message || "Error")
+    }
+  }, [user, id])
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get(`${APIURL}api/company/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
-        setItem(res.data)
-        console.log(res.data)
-      } catch (error) {
-        alert("Failed to load items!")
-      }
-    })()
-  }, [])
-
+    loadData()
+  }, [loadData])
 
   return (
     <>

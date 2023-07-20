@@ -2,9 +2,11 @@ import axios from "axios"
 import { useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { APIURL } from "../../contants"
+import { FormErrors } from "./components/FormErrors"
 
 
 export const Upload = ({user}) => {
+  const [errors, setErrors] = useState({})
   const formElement = useRef()
 
   const submitForm = async (e) => {
@@ -18,7 +20,9 @@ export const Upload = ({user}) => {
         alert("Failed to save!")
       }
     } catch (error) {
-      alert("Failed to save!")
+      setErrors(error?.response?.data || {})
+      // console.log(error);
+      alert(error?.response?.data?.detail || error?.response?.statusText || error?.message || "Error")
     }
     return false
   }
@@ -33,6 +37,13 @@ export const Upload = ({user}) => {
       </div>
       <div className="col-12">
         <form className="row" ref={formElement} onSubmit={submitForm}>
+          {
+            Object.keys(errors).length ? (
+              <div className="col-12 mb-3">
+                <FormErrors errors={errors} />
+              </div>
+            ) : ""
+          }
           <div className="col-12 mb-3">
             <label className="form-label">Select File</label>
             <input name="file" accept=".csv,.json,.xlsx" required={true} type="file" className="form-control" />
