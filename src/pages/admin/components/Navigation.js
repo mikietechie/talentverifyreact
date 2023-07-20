@@ -50,7 +50,7 @@ export default function Navigation({ children }) {
                                 <Link to="/admin/department/list/" className="nav-link"><i className="fa fa-building-user"></i>&nbsp;Department</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/admin/employment/list/" className="nav-link"><i className="fa fa-file-signature"></i>&nbsp;Employment</Link>
+                                <Link to="/admin/employment/list/" className="nav-link"><i className="fa fa-file-signature"></i>&nbsp;Contract</Link>
                             </li>
                             <li className="list-group-item">
                                 <Link to="/admin/upload/" className="nav-link"><i className="fa fa-cloud-arrow-up"></i>&nbsp;Upload</Link>

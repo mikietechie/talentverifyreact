@@ -96,3 +96,12 @@ code {
 .apc .sidebar .sidebar-inner .list-group .list-group-item:hover>.list-group {
   display: block;
 }
+
+#dashboard-page {
+  a {
+    text-decoration: none !important;
+    &:hover {
+      border-left: 5px solid #008cba;
+    }
+  }
+}

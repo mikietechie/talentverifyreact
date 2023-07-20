@@ -53,8 +53,8 @@ export const UserList = ({user}) => {
         </div>
       </div>
       <div className="col-12">
-        <div className="table-response">
-          <table className="table table-sm table-bordered table-striped table-hover">
+        <div className="table-responsive">
+          <table className="table table-sm table-bordered table-striped table-hover w-100">
             <thead>
               <tr>
                 <th>ID</th>
