@@ -229,11 +229,11 @@ export const UserAddUpdate = ({user}) => {
           </div>
           <div className="col-md-6 mb-3">
             <label className="form-label">Is Active</label>
-            <input name="is_active" required={true} defaultChecked={item.is_active} type="checkbox" className="form-check" />
+            <input name="is_active" defaultChecked={item.is_active} type="checkbox" className="form-check" />
           </div>
           <div className="col-md-6 mb-3">
             <label className="form-label">Is Superuser</label>
-            <input name="is_superuser" required={true} defaultChecked={item.is_superuser} type="checkbox" className="form-check" />
+            <input name="is_superuser" defaultChecked={item.is_superuser} type="checkbox" className="form-check" />
           </div>
           <div className="col-12 text-end">
             <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/user/list">Cancel</Link>
