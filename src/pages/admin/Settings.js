@@ -1,4 +1,4 @@
-import axios, { toFormData } from "axios"
+import axios from "axios"
 import { useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { APIURL } from "../../contants"
@@ -79,7 +79,7 @@ export const Settings = ({user}) => {
             <input name="new_password_confirmation" required={true} type="password" className="form-control" minLength={4}/>
           </div>
           <div className="col-12 text-end">
-            <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/company/list">Cancel</Link>
+            <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/">Cancel</Link>
             <button className="btn btn-primary" type="submit">Save</button>
           </div>
         </form>

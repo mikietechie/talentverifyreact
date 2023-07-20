@@ -35,34 +35,34 @@ export default function Navigation({ children }) {
                                 )
                             }
                             <li className="list-group-item">
-                                <Link to="/admin" className="nav-link"><i className="fa fa-dashboard"></i>&nbsp;Dashboard</Link>
+                                <Link to="/admin/" className="nav-link"><i className="fa fa-dashboard"></i>&nbsp;Dashboard</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/admin/user/list" className="nav-link"><i className="fa fa-user-group"></i>&nbsp;Users</Link>
+                                <Link to="/admin/user/list/" className="nav-link"><i className="fa fa-user-group"></i>&nbsp;Users</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/admin/company/list" className="nav-link"><i className="fa fa-building"></i>&nbsp;Company</Link>
+                                <Link to="/admin/company/list/" className="nav-link"><i className="fa fa-building"></i>&nbsp;Company</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/admin/employee/list" className="nav-link"><i className="fa fa-people-group"></i>&nbsp;Employee</Link>
+                                <Link to="/admin/employee/list/" className="nav-link"><i className="fa fa-people-group"></i>&nbsp;Employee</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/admin/department/list" className="nav-link"><i className="fa fa-building-user"></i>&nbsp;Department</Link>
+                                <Link to="/admin/department/list/" className="nav-link"><i className="fa fa-building-user"></i>&nbsp;Department</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/admin/employment/list" className="nav-link"><i className="fa fa-file-signature"></i>&nbsp;Employment</Link>
+                                <Link to="/admin/employment/list/" className="nav-link"><i className="fa fa-file-signature"></i>&nbsp;Employment</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/admin/upload" className="nav-link"><i className="fa fa-cloud-arrow-up"></i>&nbsp;Upload</Link>
+                                <Link to="/admin/upload/" className="nav-link"><i className="fa fa-cloud-arrow-up"></i>&nbsp;Upload</Link>
                             </li>
                         </ul>
                         <hr />
                         <ul className='list-group'>
                             <li className="list-group-item">
-                                <Link to="/admin/settings" className="nav-link"><i className="fa fa-gear"></i>&nbsp;Settings</Link>
+                                <Link to="/admin/settings/" className="nav-link"><i className="fa fa-gear"></i>&nbsp;Settings</Link>
                             </li>
                             <li className="list-group-item">
-                                <Link to="/logout" className="nav-link"><i className="fa fa-sign-out"></i>&nbsp;Logout</Link>
+                                <Link to="/logout/" className="nav-link"><i className="fa fa-sign-out"></i>&nbsp;Logout</Link>
                             </li>
                         </ul>
                     </div>

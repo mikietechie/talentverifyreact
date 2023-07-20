@@ -11,6 +11,7 @@ import AdminLayout from './pages/admin/AdminLayout';
 import Logout from "./pages/website/Logout";
 import { Users, UsersAdd } from "./pages/admin/models/users";
 import { CompanyAddUpdate, CompanyDetails, CompanyList } from "./pages/admin/models/company";
+import { DepartmentAddUpdate, DepartmentDetails, DepartmentList } from "./pages/admin/models/department";
 import { Upload } from "./pages/admin/Upload";
 
 export default function App() {
@@ -29,16 +30,25 @@ export default function App() {
         <Routes>
           {
             user && (
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route path="/admin" element={<Dashboard />} />
-                <Route path="/admin/upload" element={<Upload user={user} />} />
-                <Route path="/admin/settings" element={<Settings user={user} />} />
-                <Route path="/admin/users" element={<Users />} />
-                <Route path="/admin/users/add" element={<UsersAdd />} />
-                <Route path="/admin/company/list" element={<CompanyList user={user} />} />
-                <Route path="/admin/company/add" element={<CompanyAddUpdate user={user} />} />
-                <Route path="/admin/company/edit/:id" element={<CompanyAddUpdate user={user} />} />
-                <Route path="/admin/company/detail/:id" element={<CompanyDetails user={user} />} />
+              <Route path="/admin/" element={<AdminLayout />}>
+                <Route path="/admin/" element={<Dashboard />} />
+
+                <Route path="/admin/upload/" element={<Upload user={user} />} />
+                <Route path="/admin/settings/" element={<Settings user={user} />} />
+
+                <Route path="/admin/users/" element={<Users />} />
+                <Route path="/admin/users/add/" element={<UsersAdd />} />
+
+                <Route path="/admin/company/list/" element={<CompanyList user={user} />} />
+                <Route path="/admin/company/add/" element={<CompanyAddUpdate user={user} />} />
+                <Route path="/admin/company/edit/:id/" element={<CompanyAddUpdate user={user} />} />
+                <Route path="/admin/company/detail/:id/" element={<CompanyDetails user={user} />} />
+                
+                <Route path="/admin/department/list/" element={<DepartmentList user={user} />} />
+                <Route path="/admin/department/add/" element={<DepartmentAddUpdate user={user} />} />
+                <Route path="/admin/department/edit/:id/" element={<DepartmentAddUpdate user={user} />} />
+                <Route path="/admin/department/detail/:id/" element={<DepartmentDetails user={user} />} />
+
                 <Route path="*" element={<NotFound />} />
               </Route>
             )}

@@ -223,7 +223,6 @@ export const CompanyDetails = ({user}) => {
     try {
       const res = await axios.get(`${APIURL}api/company/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
       setItem(res.data)
-      console.log(res.data)
     } catch (error) {
       alert(error?.response?.data?.detail || error?.response?.statusText || error?.message || "Error")
     }
