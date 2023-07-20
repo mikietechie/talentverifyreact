@@ -9,11 +9,11 @@ import Dashboard from './pages/admin/Dashboard';
 import { Settings } from './pages/admin/Settings';
 import AdminLayout from './pages/admin/AdminLayout';
 import Logout from "./pages/website/Logout";
-import { Users, UsersAdd } from "./pages/admin/models/users";
 import { CompanyAddUpdate, CompanyDetails, CompanyList } from "./pages/admin/models/company";
 import { DepartmentAddUpdate, DepartmentDetails, DepartmentList } from "./pages/admin/models/department";
 import { EmployeeAddUpdate, EmployeeDetails, EmployeeList } from "./pages/admin/models/employee";
 import { EmploymentAddUpdate, EmploymentDetails, EmploymentList } from "./pages/admin/models/employment";
+import { UserAddUpdate, UserDetails, UserList } from "./pages/admin/models/user";
 import { Upload } from "./pages/admin/Upload";
 
 export default function App() {
@@ -38,8 +38,10 @@ export default function App() {
                 <Route path="/admin/upload/" element={<Upload user={user} />} />
                 <Route path="/admin/settings/" element={<Settings user={user} />} />
 
-                <Route path="/admin/users/" element={<Users />} />
-                <Route path="/admin/users/add/" element={<UsersAdd />} />
+                <Route path="/admin/user/list/" element={<UserList user={user} />} />
+                <Route path="/admin/user/add/" element={<UserAddUpdate user={user} />} />
+                <Route path="/admin/user/edit/:id/" element={<UserAddUpdate user={user} />} />
+                <Route path="/admin/user/detail/:id/" element={<UserDetails user={user} />} />
 
                 <Route path="/admin/company/list/" element={<CompanyList user={user} />} />
                 <Route path="/admin/company/add/" element={<CompanyAddUpdate user={user} />} />

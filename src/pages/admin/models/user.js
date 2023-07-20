@@ -4,12 +4,12 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { APIURL } from "../../../contants"
 import { FormErrors } from "../components/FormErrors"
 
-export const EmploymentList = ({user}) => {
+export const UserList = ({user}) => {
   const [items, setItems] = useState([])
 
   const loadData = useCallback(async () => {
     try {
-      const res = await axios.get(`${APIURL}api/employment/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+      const res = await axios.get(`${APIURL}api/user/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
       setItems(res.data)
     } catch (error) {
       alert("Failed to load items!")
@@ -21,10 +21,14 @@ export const EmploymentList = ({user}) => {
   }, [loadData])
 
   const deleteItem = async (id) => {
-    const confirmed = window.confirm(`Are you sure you want to delete employment with id #${id}?`)
+    if (!user.is_superuser) {
+        alert("U need to be a superuser to delete users!!!")
+        return
+    }
+    const confirmed = window.confirm(`Are you sure you want to delete user with id #${id}?`)
     if (confirmed) {
       try {
-        await axios.delete(`${APIURL}api/employment/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+        await axios.delete(`${APIURL}api/user/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
         loadData()
         alert("Item Deleted")
       } catch (error) {
@@ -37,13 +41,13 @@ export const EmploymentList = ({user}) => {
     <>
       <div className="col-12 mb-3">
         <h4 className="text-start mb-3">
-          <i className="fa fa-file-signature"></i>&nbsp;Employment Contract List
+          <i className="fa fa-users"></i>&nbsp;User List
         </h4>
         <div className="text-end">
           <button onClick={loadData} className="btn btn-sm btn-secondary mx-1">
             <i className="fa fa-refresh"></i>&nbsp;Refresh
           </button>
-          <Link to="/admin/employment/add" className="btn btn-sm btn-primary">
+          <Link to="/admin/user/add" className="btn btn-sm btn-primary">
             <i className="fa fa-plus"></i>&nbsp;Add
           </Link>
         </div>
@@ -54,12 +58,11 @@ export const EmploymentList = ({user}) => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Department</th>
-                <th>Employee</th>
-                <th>Company</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Email</th>
                 <th>Role</th>
-                <th>Started</th>
-                <th>Left</th>
                 <th></th>
               </tr>
             </thead>
@@ -68,18 +71,17 @@ export const EmploymentList = ({user}) => {
               items.map((item, index) => (
                 <tr key={index}>
                   <td>{item.id}</td>
-                  <td>{item.data?.department}</td>
-                  <td>{item.data?.employee}</td>
-                  <td>{item.data?.company}</td>
+                  <td>{item.first_name}</td>
+                  <td>{item.last_name}</td>
+                  <td>{item.username}</td>
+                  <td>{item.email}</td>
                   <td>{item.role}</td>
-                  <td>{item.date_started}</td>
-                  <td>{item.date_left}</td>
                   <td className="text-center">
                     <span className="btn-group">
-                      <Link className="btn btn-sm btn-success" to={`/admin/employment/detail/${item.id}`}>
+                      <Link className="btn btn-sm btn-success" to={`/admin/user/detail/${item.id}`}>
                         <i className="fa fa-eye"></i>
                       </Link>
-                      <Link className="btn btn-sm btn-secondary" to={`/admin/employment/edit/${item.id}`}>
+                      <Link className="btn btn-sm btn-secondary" to={`/admin/user/edit/${item.id}`}>
                         <i className="fa fa-edit"></i>
                       </Link>
                       <button className="btn btn-sm btn-danger" onClick={() => deleteItem(item.id)}>
@@ -98,7 +100,7 @@ export const EmploymentList = ({user}) => {
   )
 }
 
-export const EmploymentAddUpdate = ({user}) => {
+export const UserAddUpdate = ({user}) => {
   const [options, setOptions] = useState({})
   const [item, setItem] = useState({})
   const [errors, setErrors] = useState({})
@@ -108,14 +110,14 @@ export const EmploymentAddUpdate = ({user}) => {
 
   const loadData = useCallback(async () => {
     try {
-      const res = await axios.get(`${APIURL}api/employment/form/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+      const res = await axios.get(`${APIURL}api/user/form/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
       setOptions(res.data)
     } catch (error) {
       alert("Failed to load form options!")
     }
     if (id) {
       try {
-        const res = await axios.get(`${APIURL}api/employment/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+        const res = await axios.get(`${APIURL}api/user/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
         setItem(res.data)
       } catch (error) {
         alert("Failed to load update item!")
@@ -128,14 +130,18 @@ export const EmploymentAddUpdate = ({user}) => {
   }, [loadData])
 
   const submitForm = async (e) => {
+    if (id && !user.is_superuser) {
+        alert("U need to be a superuser to update users!!!")
+        return
+    }
     e.preventDefault()
     const formData = new FormData(formElement.current)
     try {
       setErrors({})
-      const res = await axios[id ? "put" : "post"](`${APIURL}api/employment/${id ? `${id}/` : ""}`, formData, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+      const res = await axios[id ? "put" : "post"](`${APIURL}api/user/${id ? `${id}/` : ""}`, formData, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
       if (res.status <= 205) {
         alert(`Item ${id ? "Updated" : "Created"}!`)
-        navigate('/admin/employment/list')
+        navigate('/admin/user/list')
       } else {
         alert("Failed to save!")
       }
@@ -151,7 +157,7 @@ export const EmploymentAddUpdate = ({user}) => {
     <>
       <div className="col-12 mb-3">
         <h4 className="text-start">
-          <i className="fa fa-file-signature"></i>&nbsp;Employment Contract {id ? `Update #${id}` : "Add"}
+          <i className="fa fa-users"></i>&nbsp;User {id ? `Update #${id}` : "Add"}
         </h4>
       </div>
       <div className="col-12">
@@ -169,57 +175,68 @@ export const EmploymentAddUpdate = ({user}) => {
               </div>
             ) : ""
           }
-          <div className="col-md-6 mb-3">
-            <label className="form-label">Company</label>
-            <select name="company" required={true} defaultValue={item.company || ""} type="text" className="form-select">
+          {/* <div className="col-md-6 mb-3">
+            <label className="form-label">Permissions</label>
+            <select name="user_permissions" required={true} defaultValue={item.user_permissions || []} type="text" className="form-select" multiple={true}>
               <option value=""></option>
               {
-                (options?.company?.choices || []).map((option, index) => (
+                (options?.user_permissions?.choices || []).map((option, index) => (
                   <option key={index} value={option[0]} >{option[1]}</option>
                 ))
               }
             </select>
           </div>
           <div className="col-md-6 mb-3">
-            <label className="form-label">Department</label>
-            <select name="department" required={true} defaultValue={item.department || ""} type="text" className="form-select">
+            <label className="form-label">Groups</label>
+            <select name="groups" required={true} defaultValue={item.groups || []} type="text" className="form-select" multiple={true}>
               <option value=""></option>
               {
-                (options?.department?.choices || []).map((option, index) => (
+                (options?.groups?.choices || []).map((option, index) => (
                   <option key={index} value={option[0]} >{option[1]}</option>
                 ))
               }
             </select>
-          </div>
-          <div className="col-md-6 mb-3">
-            <label className="form-label">Employee</label>
-            <select name="employee" required={true} defaultValue={item.employee || ""} type="text" className="form-select">
-              <option value=""></option>
-              {
-                (options?.employee?.choices || []).map((option, index) => (
-                  <option key={index} value={option[0]} >{option[1]}</option>
-                ))
-              }
-            </select>
-          </div>
+          </div> */}
           <div className="col-md-6 mb-3">
             <label className="form-label">Role</label>
-            <input name="role" required={true} defaultValue={item.role || ""} type="text" className="form-control" />
+            <select name="role" required={true} defaultValue={item.role || ""} type="text" className="form-select" multiple={false}>
+              {
+                (options?.role?.choices || []).map((option, index) => (
+                  <option key={index} value={option[0]} >{option[1]}</option>
+                ))
+              }
+            </select>
           </div>
           <div className="col-md-6 mb-3">
-            <label className="form-label">Date Started</label>
-            <input name="date_started" required={true} defaultValue={item.date_started || ""} type="date" className="form-control" />
+            <label className="form-label">First Name</label>
+            <input name="first_name" required={true} defaultValue={item.first_name || ""} type="text" className="form-control" />
           </div>
           <div className="col-md-6 mb-3">
-            <label className="form-label">Date Left</label>
-            <input name="date_left" defaultValue={item.date_left || ""} type="date" className="form-control" />
+            <label className="form-label">Last Name</label>
+            <input name="last_name" required={true} defaultValue={item.last_name || ""} type="text" className="form-control" />
           </div>
-          <div className="col-12 mb-3">
-            <label className="form-label">Duties</label>
-            <textarea name="duties" required={true} defaultValue={item.duties || ""} type="text" className="form-control"></textarea>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Username</label>
+            <input name="username" required={true} defaultValue={item.username || ""} type="text" className="form-control" />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Email</label>
+            <input name="email" required={true} defaultValue={item.email || ""} type="email" className="form-control" />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Password</label>
+            <input name="password" required={true} defaultValue={item.password || ""} type="password" className="form-control" />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Is Active</label>
+            <input name="is_active" required={true} defaultChecked={item.is_active} type="checkbox" className="form-check" />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Is Superuser</label>
+            <input name="is_superuser" required={true} defaultChecked={item.is_superuser} type="checkbox" className="form-check" />
           </div>
           <div className="col-12 text-end">
-            <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/employment/list">Cancel</Link>
+            <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/user/list">Cancel</Link>
             <button className="btn btn-primary" type="submit">Save</button>
           </div>
         </form>
@@ -230,13 +247,13 @@ export const EmploymentAddUpdate = ({user}) => {
   )
 }
 
-export const EmploymentDetails = ({user}) => {
+export const UserDetails = ({user}) => {
   const [item, setItem] = useState({})
   const { id }= useParams()
 
   const loadData = useCallback(async () => {
     try {
-      const res = await axios.get(`${APIURL}api/employment/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
+      const res = await axios.get(`${APIURL}api/user/${id}/`, {headers: {Authorization: `Bearer ${user.tokens.access}`}})
       setItem(res.data)
     } catch (error) {
       alert(error?.response?.data?.detail || error?.response?.statusText || error?.message || "Error")
@@ -251,7 +268,7 @@ export const EmploymentDetails = ({user}) => {
     <>
       <div className="col-12 mb-3">
         <h4 className="text-start">
-          <i className="fa fa-file-signature"></i>&nbsp;Employment Contract #{id}
+          <i className="fa fa-users"></i>&nbsp;User #{id}
         </h4>
       </div>
       <div className="col-12">
@@ -267,8 +284,8 @@ export const EmploymentDetails = ({user}) => {
             <p>{item.data.company}</p>
           </div>
           <div className="col-md-6 mb-3">
-            <p className="form-label">Department</p>
-            <p>{item.data.department}</p>
+            <p className="form-label">First Name</p>
+            <p>{item.data.first_name}</p>
           </div>
           <div className="col-md-6 mb-3">
             <p className="form-label">Employee</p>
@@ -295,7 +312,7 @@ export const EmploymentDetails = ({user}) => {
             <p>{item.date_left}</p>
           </div>
           <div className="col-12 text-end">
-            <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/employment/list">Back</Link>
+            <Link  className="btn btn-sm btn-secondary mx-1" to="/admin/user/list">Back</Link>
           </div>
         </form>
         )
