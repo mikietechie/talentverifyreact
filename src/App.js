@@ -12,6 +12,8 @@ import Logout from "./pages/website/Logout";
 import { Users, UsersAdd } from "./pages/admin/models/users";
 import { CompanyAddUpdate, CompanyDetails, CompanyList } from "./pages/admin/models/company";
 import { DepartmentAddUpdate, DepartmentDetails, DepartmentList } from "./pages/admin/models/department";
+import { EmployeeAddUpdate, EmployeeDetails, EmployeeList } from "./pages/admin/models/employee";
+// import { EmploymentAddUpdate, EmploymentDetails, EmploymentList } from "./pages/admin/models/employment";
 import { Upload } from "./pages/admin/Upload";
 
 export default function App() {
@@ -48,6 +50,16 @@ export default function App() {
                 <Route path="/admin/department/add/" element={<DepartmentAddUpdate user={user} />} />
                 <Route path="/admin/department/edit/:id/" element={<DepartmentAddUpdate user={user} />} />
                 <Route path="/admin/department/detail/:id/" element={<DepartmentDetails user={user} />} />
+                
+                <Route path="/admin/employee/list/" element={<EmployeeList user={user} />} />
+                <Route path="/admin/employee/add/" element={<EmployeeAddUpdate user={user} />} />
+                <Route path="/admin/employee/edit/:id/" element={<EmployeeAddUpdate user={user} />} />
+                <Route path="/admin/employee/detail/:id/" element={<EmployeeDetails user={user} />} />
+                
+                {/* <Route path="/admin/employment/list/" element={<EmploymentList user={user} />} />
+                <Route path="/admin/employment/add/" element={<EmploymentAddUpdate user={user} />} />
+                <Route path="/admin/employment/edit/:id/" element={<EmploymentAddUpdate user={user} />} />
+                <Route path="/admin/employment/detail/:id/" element={<EmploymentDetails user={user} />} /> */}
 
                 <Route path="*" element={<NotFound />} />
               </Route>
