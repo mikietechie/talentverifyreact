@@ -132,7 +132,7 @@ export const UserAddUpdate = ({user}) => {
   const submitForm = async (e) => {
     if (id && !user.is_superuser) {
         alert("U need to be a superuser to update users!!!")
-        return
+        return false
     }
     e.preventDefault()
     const formData = new FormData(formElement.current)
