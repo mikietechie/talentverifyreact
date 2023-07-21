@@ -14,7 +14,9 @@ import { DepartmentAddUpdate, DepartmentDetails, DepartmentList } from "./pages/
 import { EmployeeAddUpdate, EmployeeDetails, EmployeeList } from "./pages/admin/models/employee";
 import { EmploymentAddUpdate, EmploymentDetails, EmploymentList } from "./pages/admin/models/employment";
 import { UserAddUpdate, UserDetails, UserList } from "./pages/admin/models/user";
+import { SappAddUpdate, SappDetails, SappList } from "./pages/admin/models/Sapp";
 import { Upload } from "./pages/admin/Upload";
+import { LOCAL } from "./contants";
 
 export default function App() {
   const [user, setUser] = useState()
@@ -62,6 +64,28 @@ export default function App() {
                 <Route path="/admin/employment/add/" element={<EmploymentAddUpdate user={user} />} />
                 <Route path="/admin/employment/edit/:id/" element={<EmploymentAddUpdate user={user} />} />
                 <Route path="/admin/employment/detail/:id/" element={<EmploymentDetails user={user} />} />
+
+                {
+                  LOCAL ? (
+                    <>
+                    {
+                      [
+                        ["chat", "room"],
+                        ["chat", "contact"],
+                        ["core", "user"],
+                        ["core", "demo"],
+                      ].map(([app_label, model_name], index) => (
+                        <>
+                          <Route path={`/admin/sapp/${model_name}/list/`} element={<SappList user={user} app_label={app_label} model_name={model_name} />} />
+                          <Route path={`/admin/sapp/${model_name}/add/`} element={<SappAddUpdate user={user} app_label={app_label} model_name={model_name} />} />
+                          <Route path={`/admin/sapp/${model_name}/edit/:id/`} element={<SappAddUpdate user={user} app_label={app_label} model_name={model_name} />} />
+                          <Route path={`/admin/sapp/${model_name}/detail/:id/`} element={<SappDetails user={user} app_label={app_label} model_name={model_name} />} />
+                        </>
+                      ))
+                    }
+                    </>
+                  ) : ""
+                }
 
                 <Route path="*" element={<NotFound />} />
               </Route>

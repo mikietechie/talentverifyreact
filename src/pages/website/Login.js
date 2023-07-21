@@ -26,7 +26,7 @@ export default function Login() {
         try {
             const lres = await axios.post(`${APIURL}auth/get/`, {username, password})
             if (lres.status === 200) {
-                const ures = await axios.get(`${APIURL}api/auth/`, {
+                const ures = await axios.get(`${APIURL}auth/current/`, {
                     headers: {
                         Authorization: `Bearer ${lres.data.access}`
                     }

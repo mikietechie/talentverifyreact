@@ -2,6 +2,7 @@ import { React, useContext, useState } from 'react';
 import useBreakpoint from '../../../hooks/user-breakpoint';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/auth';
+import { LOCAL } from '../../../contants';
 
 export default function Navigation({ children }) {
     const { user } = useContext(AuthContext)
@@ -55,6 +56,24 @@ export default function Navigation({ children }) {
                             <li className="list-group-item">
                                 <Link to="/admin/upload/" className="nav-link"><i className="fa fa-cloud-arrow-up"></i>&nbsp;Upload</Link>
                             </li>
+                            {
+                                LOCAL ? (
+                                    <>
+                                        <li className="list-group-item">
+                                            <Link to="/admin/sapp/user/list/" className="nav-link"><i className="fa fa-cube"></i>&nbsp;User</Link>
+                                        </li>
+                                        <li className="list-group-item">
+                                            <Link to="/admin/sapp/room/list/" className="nav-link"><i className="fa fa-cube"></i>&nbsp;Room</Link>
+                                        </li>
+                                        <li className="list-group-item">
+                                            <Link to="/admin/sapp/contact/list/" className="nav-link"><i className="fa fa-cube"></i>&nbsp;Contact</Link>
+                                        </li>
+                                        <li className="list-group-item">
+                                            <Link to="/admin/sapp/demo/list/" className="nav-link"><i className="fa fa-cube"></i>&nbsp;Demo</Link>
+                                        </li>
+                                    </>
+                                ) : ""
+                            }
                         </ul>
                         <hr />
                         <ul className='list-group'>
