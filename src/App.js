@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { AuthContext } from "./contexts/auth";
 import WebsiteLayout from "./pages/website/WebsiteLayout";
 import Home from "./pages/website/Home";
@@ -70,17 +70,17 @@ export default function App() {
                     <>
                     {
                       [
-                        ["chat", "room"],
-                        ["chat", "contact"],
-                        ["core", "user"],
-                        ["core", "demo"],
-                      ].map(([app_label, model_name], index) => (
-                        <>
-                          <Route path={`/admin/sapp/${model_name}/list/`} element={<SappList user={user} app_label={app_label} model_name={model_name} />} />
-                          <Route path={`/admin/sapp/${model_name}/add/`} element={<SappAddUpdate user={user} app_label={app_label} model_name={model_name} />} />
-                          <Route path={`/admin/sapp/${model_name}/edit/:id/`} element={<SappAddUpdate user={user} app_label={app_label} model_name={model_name} />} />
-                          <Route path={`/admin/sapp/${model_name}/detail/:id/`} element={<SappDetails user={user} app_label={app_label} model_name={model_name} />} />
-                        </>
+                        ["chat", "room", "joomla"],
+                        ["chat", "contact", "address-book"],
+                        ["core", "user", "users"],
+                        ["core", "demo", "buromobelexperte"],
+                      ].map(([app_label, model_name, icon], index) => (
+                        <Fragment key={index}>
+                          <Route path={`/admin/sapp/${model_name}/list/`} element={<SappList user={user} app_label={app_label} model_name={model_name} icon={icon} />} />
+                          <Route path={`/admin/sapp/${model_name}/add/`} element={<SappAddUpdate user={user} app_label={app_label} model_name={model_name} icon={icon} />} />
+                          <Route path={`/admin/sapp/${model_name}/edit/:id/`} element={<SappAddUpdate user={user} app_label={app_label} model_name={model_name} icon={icon} />} />
+                          <Route path={`/admin/sapp/${model_name}/detail/:id/`} element={<SappDetails user={user} app_label={app_label} model_name={model_name} icon={icon} />} />
+                        </Fragment>
                       ))
                     }
                     </>

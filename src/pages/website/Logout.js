@@ -8,7 +8,7 @@ export default function Logout() {
     
     useEffect(() => {
         setUser(null)
-        localStorage.removeItem('user')
+        localStorage.clear()
         setTimeout(() => {
             navigate('/')
         }, 0)
